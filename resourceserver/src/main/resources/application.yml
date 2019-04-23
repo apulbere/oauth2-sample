@@ -1,0 +1,4 @@
+server.port: 8081
+security.oauth2.resource.token-info-uri: http://localhost:8080/oauth/check_token
+security.oauth2.client.client-id: StrexCorp
+security.oauth2.client.client-secret: smiling_god
