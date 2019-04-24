@@ -35,18 +35,24 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
+                .withClient("DesertBluffs")
+                    .authorizedGrantTypes("password", "refresh_token")
+                    .scopes("all")
+                    .secret(passwordEncoder().encode(""))
+                .and()
                 .withClient("StrexCorp")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("USER")
-                .scopes("read","write")
-                .autoApprove(true)
-                .secret(passwordEncoder().encode("smiling_god"));
+                    .authorizedGrantTypes("password", "refresh_token")
+                    .scopes("all")
+                    .secret(passwordEncoder().encode("smiling_god"));
 
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
-        oauthServer.checkTokenAccess("permitAll()");
+        oauthServer
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
+                .allowFormAuthenticationForClients();
     }
 
     @Bean

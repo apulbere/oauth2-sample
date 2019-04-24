@@ -14,9 +14,7 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers("/hello")
-                .access("#oauth2.hasScope('read')");
+                .authorizeRequests().antMatchers("/*").authenticated();
     }
 
     @Bean
